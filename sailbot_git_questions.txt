@@ -1,0 +1,60 @@
+1) How would you clone the repository https://github.com/UBCSailbot/ubcsailbots onto your computer?
+
+Assuming this is all done on a Linux terminal, the only command necessary is "git clone" since the git repo already exists.  The full command is as follows:
+
+git clone https://github.com/UBCSailbot/ubcsailbots.git
+
+The .git appended at the end of the original URL is a directory containing metadata regarding the desired git project.  This includes info such as previous commits, HEAD, index, etc.  By default, the cloned repo will create
+a new directory in your private work tree by the same name, which in this case is "ubcsailbots".  If you desire a different name for this repo in your private tree, use the following command:
+
+git clone https://github.com/UBCSailbot/ubcsailtbots.git <desired_name_here>
+
+2) Suppose you have changes with a desired message: "updated wind angles and added unit tests!"  You have a modified file wind_angles.txt and added a new file test_wind_angles.py.  How would you submit all of your changes to the 
+remote repository you cloned above?
+
+I am unsure if I'm interpreting the question correctly, so I'll list out my assumptions.  The file wind_angles.txt has been modified but the modifications have not been staged for the next commit.  The file test_wind_angles.py 
+has been created but is currently untracked by git and is also unstaged for the next commit.  If both files are in the same directory, the easiest way to stage both files at once is to run this command within that directory:
+
+git add .
+
+This command will place all files within the directory into the staging area, which is simply a file storing information about what will be added/modified/removed when the next commit is made.  If the two files are in different 
+directories, the first step would be to add wind_angles.txt to the staging area explicitly by using the following command inside the directory containing wind_angles.txt(method 1) or staying in your current directory and providing 
+the full path name to wind_angles.txt(method 2):
+
+(method1)
+git add wind_angles.txt
+
+(method2)
+git add <directory-path-to-wind-angles>/wind_angles.txt
+
+The same must be done for test_wind_angles.py.  The process is identical to adding wind_angles.txt to the staging area:
+
+(method 1)
+git add test_wind_angles.py
+
+(method 2)
+git add <directory-path-to-test-wind-angles>/test_wind_angles.py
+
+Once both files have been staged, simply commit them both to your local repo using the following command:
+
+git commit -m "updated wind angles and added unit tests!"
+
+The "-m" after the "commit" keyword specifies that the next argument following "-m" will be the comment associated with the commit.  The commit will modify the .git file within your local repo to reflect all the modifications
+that have been made.  Before submitting your changes to the remote repo, it is best to pull the most updated code from the remote repo.  This is done using:
+
+git pull origin master
+
+This command will update your own "master" branch, which is your working tree, with any updates from the remote repo, which is the centralized remote repository shared by your team.  "origin" is the naming convention that usually
+signifies the primary repo shared by your team for a project.  However, this name is by no means strictly enforced, and there could be more than one remote repo used by the team.  Merge conflicts may also arise after a git pull
+if you both you and some other team member modified the same files.  There are several ways to resolve this conflict, and once the conflict is resolved, you can finally submit your own changes to the remote repo using the 
+following command:
+
+git push origin master
+
+This will update the remote repo with your local repo's .git file, containing information on all the changes that have been made.  Once the push is complete, your changes will be seen by any other team member who 
+pulls from the remote repo.  
+
+
+END NOTE:
+- If the project requires constant pushing and pulling from remote repo, it's best to set up an SSH key.  SSH keys consist of a private and a public key - public key is hosted in the remote repo's .ssh folder while the private key
+should be hosted in your own .ssh folder.  This will allow for password-less authentification when you push and pull code, which is both safer and more time efficient in the long run.
